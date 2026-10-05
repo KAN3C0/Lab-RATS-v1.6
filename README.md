@@ -5,11 +5,11 @@
 <p align="center">
   <img src="https://img.shields.io/badge/JDK-21-gold?style=for-the-badge&logo=openjdk&logoColor=white">
   <img src="https://img.shields.io/badge/Android-SDK_34-green?style=for-the-badge&logo=android&logoColor=white">
-  <img src="https://img.shields.io/badge/Focus-Remote_Access-red?style=for-the-badge&logo=airplayvideo&logoColor=white">
+  <img src="https://img.shields.io/badge/Focus-Remote_Access-red?style=for-the-badge&logo=openaccess&logoColor=white">
   <img src="https://img.shields.io/badge/Security-AES_256-blueviolet?style=for-the-badge&logo=dependencycheck&logoColor=white">
   <br>
-  <img src="https://img.shields.io/badge/Network-Direct_IPv6-informational?style=for-the-badge&logo=p2p&logoColor=white">
-  <img src="https://img.shields.io/badge/Mode-Stealth_FUD-black?style=for-the-badge&logo=ghost&logoColor=white">
+  <img src="https://img.shields.io/badge/Network-Direct_IPv6-informational?style=for-the-badge&logo=gitconnected&logoColor=white">
+  <img src="https://img.shields.io/badge/Mode-Stealth_FUD-black?style=for-the-badge&logo=ghostfolio&logoColor=white">
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge&logo=opensourceinitiative&logoColor=white">
 </p>
 
@@ -258,7 +258,7 @@ function handleRequest(e) {
 *   **and Many More**: The **Wizard** also supports **ADB Strategic Bridge, Stego Image Tails, PWA Manifests**, and **Office Document macros**.
 
 #### B. Hosting Strategies
-*   **Anonymous Cloud**: **Option 6** uses **Catbox.moe by default**. It is **anonymous, fast**, and **generates a direct link**.
+*   **Anonymous Cloud**: **Option 6** uses **Catbox.moe by default**. It is **anonymous, fast**, and **generates a direct link**. Now includes **fallback upload to Litterbox and tmpfiles** if needed.
 *   **P2P Direct**: Host the **APK directly from your PC using a public tunnel**, or from **another infected device** using the `/download/` endpoint.
 
 #### C. Installation & Initialization
@@ -270,7 +270,7 @@ Once the **Target device** downloads the **APK**:
 4.  **Uplink Confirmation**: Check your **Google Sheet**. Within **5 seconds of initialization**, the **Device Make & Model, Connection Type, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status and Storage Space will appear in the log**.
 
 <details>
-  <summary>📸 Click to view Example Google Sheet Reporting</summary>
+  <summary>📸 Click to View Example Google Sheet Reporting</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/ad174175-eed8-46b4-bd8d-8c72895cf88a" alt="Full Web Page Screenshot" width="80%">
 </details>
@@ -284,12 +284,12 @@ Once the **Target device** downloads the **APK**:
 ### Contributions:
 **Bug Reports, Add New Feature** and **Pull Requests** are **always welcome!**. *(See [CONTRIBUTING.md](https://github.com/K4N3CO/Lab-RATS/blob/main/CONTRIBUTING.md) for **more info**.)*
 
-### Donations:
+---
 
+### Donate:
 <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black">
 
 **https://buymeacoffee.com/k4n3co**
-
 
 <img src="https://img.shields.io/badge/Donate-Bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white">
 
@@ -334,7 +334,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 01. Terminal Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/920be29b-88bd-4516-82ff-1deb28cce098" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -344,7 +344,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 02. Ghost_Operations Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/25021056-538d-4392-bbf1-e66a2c5873af" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -354,7 +354,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 03. Optics/Live Camera Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/020eff59-9444-4dcd-b987-6c0fbcb6249e" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -364,7 +364,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 04. Locate/Live GPS Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/cae2c596-8551-4dbf-80a3-6a9b4cfec58d" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -374,7 +374,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 05. Exploit_Factory Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/9adc2ea3-9705-4f61-9d47-329f4d17b373" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -384,7 +384,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 06. Device Data/Storage Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/55726a19-c071-405c-afef-ab50f119f3e0" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -394,7 +394,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 07. Intel/App Notifications Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/35c0ff19-fec5-4734-a103-99f260ea7419" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -404,7 +404,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 08. SMS/Text Message Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/bafdc486-fc2b-4399-99c9-2e6e444d8a18" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -414,7 +414,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 09. MMS/Multimedia Message Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/2559606d-6025-416c-99b1-8a78e046d31b" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -424,7 +424,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 10. Acoustics/Audio Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/8b1efce6-1d3b-490c-8d73-9dbde39c2a53" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -434,7 +434,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 11. Comms/Call_Logs Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/53d82189-6cb9-4489-835b-b929624181de" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -444,7 +444,7 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 12. Contacts Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/9c7336a1-9770-4881-bfcc-3de331812789" alt="Full Web Page Screenshot" width="100%">
 </details>
@@ -454,27 +454,27 @@ https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
 ### 13. Hardware/Device Info Tab:
 
 <details>
-  <summary>📸 Click to view web page screenshot</summary>
+  <summary>📸 Click to View Web Page Screenshot</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/d918e6bf-7b92-42ad-bf17-c38ef1c32615" alt="Full Web Page Screenshot" width="100%">
 </details>
 
 ---
 
-## ⚠️ **Disclaimer**
+## ⚠️ Disclaimer
 
 This tool is for **educational and authorized security testing purposes ONLY!**. The **developers & contributors** assume **NO responsibility** for **ANY** **misuse, damage to devices or relationships** caused by this software. **Please use it responsibly**. **Thank you!**
 
 ---
 
-## 📄 **License**
+## 📄 License
 
-This project is **Licensed** to **K4N3CO** under the [MIT License](LICENSE).
+**Lab-RATS** is **Licensed** to **K4N3CO** under the [MIT License](LICENSE).
 
 ---
 
 <p align="center">
-<img src="https://img.shields.io/badge/The one's who MIND don't matter-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
-
+<img src="https://img.shields.io/badge/The one's who MIND don't matter...-The one's who MATTER don't mind-cyan?style=for-the-badge&logo=maserati&logoColor=white">
+<br>
 <p align="center">
-<img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=maserati&logoColor=white">
+<img src="https://img.shields.io/badge/Developed By-K4N3CO ©2026-darkred?style=for-the-badge&logo=magisk&logoColor=white">
