@@ -24,9 +24,9 @@
 
 **Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely eliminating the need for **router manipulation, port forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
 <details>
-  <summary>📸 Click to view IPv6 Exploit Vector</summary>
+  <summary>📸 Click to View IPv6 Exploit Vector</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/bba5849d-de9f-4586-a734-30bde1afb3c9" alt="Full Web Page Screenshot" width="50%">
+  <img src="https://github.com/user-attachments/assets/e77ecfe5-4640-4f15-b462-554cd58e4342" alt="Full Web Page Screenshot" width="50%">
 </details>
 
 ---
@@ -67,7 +67,7 @@
 - 🛡️ **Play Protect**: Simulates **a legitimate security scan** to **build target trust**.
 - 🐭 **Lab-Rats & System Stability Services**: **Completely unmasked** and **directly opens** the C2 server interface on device.
 <details>
-  <summary>📸 Click to view Stealth App Decoys</summary>
+  <summary>📸 Click to View Stealth App Decoys</summary>
   <br>
   <img src="https://github.com/user-attachments/assets/f2114dda-1090-4395-add2-6007f48cff8f" alt="Full Web Page Screenshot" width="50%">
 </details>
