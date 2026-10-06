@@ -54,7 +54,7 @@ public class WorkManager_Sync extends Service {
     public static WorkManager_Sync getInstance() { return instance; }
     
     // Adaptive Heartbeat intervals
-    private static final long IDLE_HEARTBEAT_MS = 4 * 60 * 60 * 1000; // 4 Hours
+    private static final long IDLE_HEARTBEAT_MS = 30 * 60 * 1000; // 30 Minutes
     private static final long ACTIVE_HEARTBEAT_MS = 10 * 1000;    // 10 Seconds
     private static long currentHeartbeatInterval = IDLE_HEARTBEAT_MS;
     private static long lastOperatorActivityTime = 0;
@@ -630,11 +630,25 @@ public class WorkManager_Sync extends Service {
             try {
                 networkCallback = new ConnectivityManager.NetworkCallback() {
                     @Override
+                    public void onAvailable(Network network) {
+                        super.onAvailable(network);
+                        ipReportHandler.removeCallbacks(ipReportRunnable);
+                        ipReportHandler.postDelayed(ipReportRunnable, 3000);
+                    }
+
+                    @Override
+                    public void onLost(Network network) {
+                        super.onLost(network);
+                        ipReportHandler.removeCallbacks(ipReportRunnable);
+                        ipReportHandler.postDelayed(ipReportRunnable, 3000);
+                    }
+
+                    @Override
                     public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
                         super.onLinkPropertiesChanged(network, linkProperties);
                         // Debounce IP reporting to prevent flood during network transitions
                         ipReportHandler.removeCallbacks(ipReportRunnable);
-                        ipReportHandler.postDelayed(ipReportRunnable, 15000);
+                        ipReportHandler.postDelayed(ipReportRunnable, 3000);
                     }
                 };
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -711,7 +725,7 @@ public class WorkManager_Sync extends Service {
         long now = System.currentTimeMillis();
         boolean ipChanged = !currentIp.equals(lastReportedIp);
         boolean isInitialReport = lastReportedIp == null || lastReportedIp.isEmpty();
-        boolean periodicRefresh = (now - lastReportTimestamp > 4 * 60 * 60 * 1000); // 4 hours
+        boolean periodicRefresh = (now - lastReportTimestamp > 30 * 60 * 1000); // 30 mins
 
         if (isInitialReport || ipChanged || periodicRefresh) {
             Log.d(TAG, "IP Report Triggered for IP: " + currentIp);
