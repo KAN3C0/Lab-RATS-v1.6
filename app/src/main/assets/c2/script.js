@@ -538,8 +538,17 @@ function executeShell() {
           if (tu) tu.style.display = "none";
         }
 
+        if (t.trim().toLowerCase() === "exit") {
+          window.isKaliMode = false;
+        } else if (t.startsWith("nh") || t.startsWith("nethunter") || t.startsWith("kali") || t.startsWith("nmap") || t.startsWith("msfconsole") || t.startsWith("sqlmap") || t.startsWith("hydra") || t.startsWith("wifite") || t.startsWith("aircrack-ng")) {
+          window.isKaliMode = true;
+        }
+        const userPrefix = window.isKaliMode ? "kali@android" : "root@Android";
         const p = document.getElementById("terminal-prompt");
-        if (p) p.innerText = "root@Android:" + currentPath + symbol;
+        if (p) {
+          p.style.color = window.isKaliMode ? "var(--neon-cyan)" : "var(--terminal-green)";
+          p.innerText = userPrefix + ":" + currentPath + symbol;
+        }
 
         if (data.output === "__CLEAR_SCREEN__") {
           if (o) o.innerHTML = "";

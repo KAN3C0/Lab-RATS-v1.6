@@ -23,7 +23,7 @@ android {
         minSdk 21
         targetSdk 34
         versionCode 620
-        versionName "3.1.7"
+        versionName "3.9.8"
         
         // Read WEBHOOK_URL from local.properties
         def localProperties = new Properties()

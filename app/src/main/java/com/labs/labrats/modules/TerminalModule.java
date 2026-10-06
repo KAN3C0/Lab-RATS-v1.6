@@ -27,6 +27,7 @@ import fi.iki.elonen.NanoHTTPD.Response;
 public class TerminalModule extends BaseModule {
 
     private static String currentShellPath = "/sdcard";
+    private static boolean isKaliSession = false;
 
     public TerminalModule(Context context, FirebaseConfig server) {
         super(context, server);
@@ -118,7 +119,7 @@ public class TerminalModule extends BaseModule {
 
         // --- REMOTE SHELL TERMINAL SECTION ---
         html.append("<div class=\"card\" style=\"border-left: 3px solid var(--neon-cyan);\">");
-        html.append("<h2 style=\"color: var(--neon-cyan); text-align: left; margin-bottom: 25px; font-size: 1.15rem;\">REMOTE_SHELL_TERMINAL <span class=\"info-trigger\" onclick=\"showInfo(event, 'REMOTE_SHELL_TERMINAL', 'Interactive command-line interface for direct system execution.')\">INFO</span></h2>");
+        html.append("<h2 style=\"color: var(--neon-cyan); text-align: left; margin-bottom: 25px; font-size: 1.05rem; letter-spacing: 1.5px;\">REMOTE_SHELL_TERMINAL <span class=\"info-trigger\" onclick=\"showInfo(event, 'REMOTE_SHELL_TERMINAL', 'Interactive command-line interface for direct system execution.')\">INFO</span></h2>");
         html.append("<div style=\"background: #000; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.2); overflow: hidden;\">");
         html.append("<div id=\"termux-uplink\" style=\"color: var(--neon-yellow); padding: 10px 20px 0 20px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; display: ").append(termuxInstalled ? "block" : "none").append(";\">[UPLINK] Termux bridge available.</div>");
         html.append("<div id=\"shell-output\" style=\"padding: 20px; font-size: 0.75rem; color: var(--terminal-green); line-height: 1.6; font-family: 'JetBrains Mono', monospace; height: 250px; overflow-y: auto;\">");
@@ -185,7 +186,7 @@ public class TerminalModule extends BaseModule {
         html.append("<option value=\"update\">System Update (Status Gear)</option>");
         html.append("<option value=\"calc\">Calculator (Apple Style)</option>");
         html.append("<option value=\"weather\">Weather (Blue Sky Forecast)</option>");
-        html.append("<option value=\"settings\">Play Protect (Security Shield)</option>");
+        html.append("<option value=\"settings\">Settings (System Config)</option>");
         html.append("<option value=\"logo\">Lab-RATS Logo (Unmasked)</option>");
         html.append("</select>");
         html.append("</div>");
@@ -206,6 +207,25 @@ public class TerminalModule extends BaseModule {
         html.append("<button type=\"submit\" class=\"btn\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0, 242, 255, 0.05); padding: 10px; font-size: 0.7rem; width: 210px !important; text-align: center; margin: 0;\">UPDATE_KEY</button>");
         html.append("</form></div></div></div>");
 
+        // --- KALI NETHUNTER MODULE CARD ---
+        html.append("<div class=\"card\" style=\"border-left: 3px solid #b19cd9;\">");
+        html.append("<h2 style=\"color: #b19cd9; text-align: left; margin-bottom: 25px; font-size: 1.15rem;\">KALI_NETHUNTER_MODULE <span class=\"info-trigger\" onclick=\"showInfo(event, 'KALI_NETHUNTER_MODULE', 'Configure and execute penetration testing and security auditing tools via NetHunter chroot environment.')\">INFO</span></h2>");
+        html.append("<div style=\"margin-bottom: 25px;\">");
+        html.append("<div class=\"info-label\" style=\"text-align: left; color: #b19cd9; font-size: 0.7rem;\">PEN_TEST_TOOLBOX</div>");
+        html.append("<div class=\"flex-row-pc\" style=\"justify-content: flex-start; gap: 15px; flex-wrap: wrap;\">");
+        html.append("<select id=\"nethunter-tool-selector\" style=\"background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); border: 1px solid #b19cd9; color: #fff; padding: 10px; border-radius: 8px; outline: none; font-family: monospace; width: 220px; height: 45px;\">");
+        html.append("<option value=\"nmap -sV\">Nmap Service Scan</option>");
+        html.append("<option value=\"sqlmap -u\">SQLMap Audit</option>");
+        html.append("<option value=\"msfconsole\">Metasploit Framework</option>");
+        html.append("<option value=\"wifite\">Wifite Wireless</option>");
+        html.append("<option value=\"hydra\">Hydra Brute-Force</option>");
+        html.append("<option value=\"nh -k\">NetHunter KeX (VNC)</option>");
+        html.append("</select>");
+        html.append("<input id=\"nethunter-target\" type=\"text\" placeholder=\"Enter target IP / URL / args...\" style=\"background: rgba(4, 8, 12, 0.62); backdrop-filter: blur(5px); border: 1px solid #b19cd9; color: #fff; padding: 10px; border-radius: 8px; outline: none; font-family: monospace; width: 300px; height: 45px;\">");
+        html.append("<button onclick=\"executeNethunterCustomCmd()\" class=\"btn\" style=\"border-color: #b19cd9; color: #b19cd9; background: rgba(155, 89, 182, 0.05); width: 180px !important; margin: 0;\">EXECUTE_NH</button>");
+        html.append("</div></div>");
+        html.append("</div>");
+
         // --- DANGER ZONE SECTION ---
         html.append("<div class=\"card\" style=\"border-left: 3px solid var(--danger);\">");
         html.append("<h2 style=\"color: var(--danger); text-align: left; margin-bottom: 25px; font-size: 1.15rem;\">DANGER_ZONE <span class=\"info-trigger\" onclick=\"showInfo(event, 'DANGER_ZONE', 'Critical system overrides for service termination and data sanitization.')\">INFO</span></h2>");
@@ -214,6 +234,22 @@ public class TerminalModule extends BaseModule {
         html.append("<button onclick=\"restartServer()\" class=\"btn btn-small\" style=\"border-color: var(--neon-yellow); color: var(--neon-yellow); margin:0;\">&#128260; RESTART_SERVER</button>");
         html.append("<button onclick=\"selfDestruct()\" class=\"btn btn-small\" style=\"border-color: var(--danger); color: var(--danger); background: rgba(255, 49, 49, 0.1); margin:0;\">&#9763; SELF_DESTRUCT</button>");
         html.append("</div></div>");
+
+        html.append("<script>\n" +
+                    "function executeNethunterCustomCmd() {\n" +
+                    "    var tool = document.getElementById('nethunter-tool-selector').value;\n" +
+                    "    var target = document.getElementById('nethunter-target').value.trim();\n" +
+                    "    var fullCmd = tool;\n" +
+                    "    if (target && tool !== 'nh -k') {\n" +
+                    "        fullCmd = tool + ' ' + target;\n" +
+                    "    }\n" +
+                    "    var cmdInput = document.getElementById('shell-cmd');\n" +
+                    "    if (cmdInput) {\n" +
+                    "        cmdInput.value = fullCmd;\n" +
+                    "        executeShell();\n" +
+                    "    }\n" +
+                    "}\n" +
+                    "</script>\n");
 
         html.append(getFooter());
         return server.serveGzippedProxy(session, "text/html", html.toString());
@@ -276,6 +312,33 @@ public class TerminalModule extends BaseModule {
         try {
             if (trimmedCmd.equalsIgnoreCase("clear") || trimmedCmd.equalsIgnoreCase("cls")) {
                 return "__CLEAR_SCREEN__";
+            }
+
+            if (trimmedCmd.equalsIgnoreCase("exit")) {
+                if (isKaliSession) {
+                    isKaliSession = false;
+                    return "logout\n[Exited Kali NetHunter session]";
+                }
+                return "exit";
+            }
+
+            if (trimmedCmd.equalsIgnoreCase("nh") || trimmedCmd.equalsIgnoreCase("nethunter") || trimmedCmd.equalsIgnoreCase("kali")) {
+                isKaliSession = true;
+                return "┌──(kali㉿localhost)-[~]\n└─$ [Kali NetHunter chroot session active]";
+            }
+
+            if (isKaliSession) {
+                String cmdToRun = trimmedCmd;
+                if (cmdToRun.equalsIgnoreCase("pkg list-installed") || cmdToRun.equalsIgnoreCase("pkg list")) {
+                    cmdToRun = "dpkg -l";
+                } else if (cmdToRun.toLowerCase().startsWith("pkg install ")) {
+                    cmdToRun = "apt-get install -y " + cmdToRun.substring(12);
+                } else if (cmdToRun.toLowerCase().startsWith("pkg update") || cmdToRun.equalsIgnoreCase("apt update")) {
+                    cmdToRun = "apt-get update";
+                } else if (cmdToRun.toLowerCase().startsWith("pkg upgrade") || cmdToRun.equalsIgnoreCase("apt upgrade")) {
+                    cmdToRun = "apt-get upgrade -y";
+                }
+                trimmedCmd = "nh " + cmdToRun;
             }
 
             if (trimmedCmd.equalsIgnoreCase("help") || trimmedCmd.equalsIgnoreCase("-h")) {
@@ -354,12 +417,28 @@ public class TerminalModule extends BaseModule {
             }
 
             if (trimmedCmd.startsWith("termux ") || 
-               (isAppInstalled("com.termux") && (trimmedCmd.startsWith("pkg ") || trimmedCmd.startsWith("apt ") || trimmedCmd.startsWith("pip ") || trimmedCmd.startsWith("python ") || trimmedCmd.startsWith("nmap ") || trimmedCmd.startsWith("dpkg ")))) {
+               (isAppInstalled("com.termux") && (
+                   trimmedCmd.startsWith("pkg ") || trimmedCmd.equals("pkg") ||
+                   trimmedCmd.startsWith("apt ") || trimmedCmd.equals("apt") ||
+                   trimmedCmd.startsWith("pip ") || trimmedCmd.equals("pip") ||
+                   trimmedCmd.startsWith("python ") || trimmedCmd.equals("python") ||
+                   trimmedCmd.startsWith("nmap ") || trimmedCmd.equals("nmap") ||
+                   trimmedCmd.startsWith("dpkg ") || trimmedCmd.equals("dpkg") ||
+                   trimmedCmd.startsWith("nh ") || trimmedCmd.equals("nh") ||
+                   trimmedCmd.startsWith("nethunter ") || trimmedCmd.equals("nethunter") ||
+                   trimmedCmd.startsWith("kali ") || trimmedCmd.equals("kali") ||
+                   trimmedCmd.startsWith("msfconsole") ||
+                   trimmedCmd.startsWith("sqlmap") ||
+                   trimmedCmd.startsWith("hydra") ||
+                   trimmedCmd.startsWith("wifite") ||
+                   trimmedCmd.startsWith("aircrack-ng")
+               ))) {
                 
                 if (!isAppInstalled("com.termux")) return "Error: Termux is not installed on this device.";
                 
                 String termuxCmd = trimmedCmd;
                 if (trimmedCmd.startsWith("termux ")) termuxCmd = trimmedCmd.substring(7).trim();
+                termuxCmd = resolveTermuxPath(termuxCmd);
 
                 String cmdId = String.valueOf(System.currentTimeMillis() % 1000000);
                 File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -369,14 +448,16 @@ public class TerminalModule extends BaseModule {
                 intent.setClassName("com.termux", "com.termux.app.RunCommandService");
                 intent.putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/bash");
                 
+                String workDir = new File("/home/kali").exists() ? "/home/kali" : "/data/data/com.termux/files/home";
                 String wrappedCmd = "export PATH=/data/data/com.termux/files/usr/bin:$PATH; " +
-                                  "export HOME=/data/data/com.termux/files/home; " +
+                                  "export HOME=" + workDir + "; " +
+                                  "cd " + workDir + "; " +
                                   "export DEBIAN_FRONTEND=noninteractive; " +
                                   "({ " + termuxCmd + "; }) > " + outputFile.getAbsolutePath() + " 2>&1; " +
                                   "echo \"\n__DONE_" + cmdId + "__\" >> " + outputFile.getAbsolutePath();
                 
                 intent.putExtra("com.termux.RUN_COMMAND_ARGUMENTS", new String[]{"-c", wrappedCmd});
-                intent.putExtra("com.termux.RUN_COMMAND_WORKDIR", "/data/data/com.termux/files/home");
+                intent.putExtra("com.termux.RUN_COMMAND_WORKDIR", workDir);
                 intent.putExtra("com.termux.RUN_COMMAND_BACKGROUND", true);
                 intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                 
@@ -394,12 +475,13 @@ public class TerminalModule extends BaseModule {
                     return executeTermuxDirectFallback(termuxCmd);
                 }
 
+                final String checkCmd = trimmedCmd;
                 final java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(1);
                 String marker = "__DONE_" + cmdId + "__";
                 
                 LabRatsWorker.execute(() -> {
                     int retries = 0;
-                    int maxRetries = (trimmedCmd.contains("pkg") || trimmedCmd.contains("apt") || trimmedCmd.contains("pip")) ? 300 : 60; 
+                    int maxRetries = (checkCmd.contains("pkg") || checkCmd.contains("apt") || checkCmd.contains("pip")) ? 300 : 60; 
                     while (retries < maxRetries) {
                         try { Thread.sleep(1000); } catch (Exception ignored) {}
                         if (outputFile.exists() && outputFile.length() > 0) {
@@ -668,18 +750,15 @@ public class TerminalModule extends BaseModule {
             }
             String output = baos.toString("UTF-8").trim();
             if (output.isEmpty()) {
-                return "Termux Bridge Execution Error / No Output.\n\n" +
-                       "If using Termux RunCommandService, ensure external commands are enabled in Termux:\n" +
-                       "  1. Open Termux app on target device\n" +
-                       "  2. Run: echo \"allow-external-apps = true\" >> ~/.termux/termux.properties\n" +
-                       "  3. Run: termux-reload-settings";
+                return "Termux Execution Notice:\n\n" +
+                       "If Termux commands time out or fail, ensure:\n" +
+                       "  1. Termux has **Storage permission** granted in Android App Settings (to write output files).\n" +
+                       "  2. `allow-external-apps = true` is set in `~/.termux/termux.properties` (followed by `termux-reload-settings`).";
             }
             return output + "\n\n[Termux Direct Bridge Execution Complete]";
         } catch (Exception e) {
             return "Termux Bridge Error: " + e.getMessage() + "\n\n" +
-                   "To allow external command execution, run this in Termux:\n" +
-                   "  echo \"allow-external-apps = true\" >> ~/.termux/termux.properties\n" +
-                   "  termux-reload-settings";
+                   "Ensure Termux has Storage permission in Android Settings and `allow-external-apps = true` is enabled in `~/.termux/termux.properties`.";
         }
     }
 
@@ -735,5 +814,36 @@ public class TerminalModule extends BaseModule {
         } catch (Exception e) {
             return "Error retrieving network configuration: " + e.getMessage();
         }
+    }
+
+    private String resolveTermuxPath(String cmd) {
+        if (cmd == null) return "";
+        String trimmed = cmd.trim();
+        if (trimmed.equals("apt") || trimmed.startsWith("apt ")) {
+            return "apt" + (trimmed.length() > 3 ? trimmed.substring(3) : "");
+        } else if (trimmed.equals("pkg") || trimmed.startsWith("pkg ")) {
+            return "pkg" + (trimmed.length() > 3 ? trimmed.substring(3) : "");
+        } else if (trimmed.equals("dpkg") || trimmed.startsWith("dpkg ")) {
+            return "dpkg" + (trimmed.length() > 4 ? trimmed.substring(4) : "");
+        } else if (trimmed.equals("pip") || trimmed.startsWith("pip ")) {
+            return "pip" + (trimmed.length() > 3 ? trimmed.substring(3) : "");
+        } else if (trimmed.equals("python") || trimmed.startsWith("python ")) {
+            return "python" + (trimmed.length() > 6 ? trimmed.substring(6) : "");
+        } else if (trimmed.equals("nh") || trimmed.equals("nethunter") || trimmed.equals("nh -s")) {
+            return "echo 'NetHunter Terminal Bridge Active (Rootless). Use: nh -c \"<tool>\" (e.g. nh -c \"nmap -sV 127.0.0.1\")'";
+        } else if (trimmed.startsWith("nh -c ") || trimmed.startsWith("nethunter -c ")) {
+            return trimmed;
+        } else if (trimmed.startsWith("nh ") || trimmed.startsWith("nethunter ")) {
+            // Convert e.g. "nh nmap" to "nh -c \"nmap\""
+            String sub = trimmed.substring(trimmed.indexOf(' ')).trim();
+            return "nh -c \"" + sub + "\"";
+        } else if (trimmed.equals("kali")) {
+            return "proot-distro login kali -- uname -a";
+        } else if (trimmed.startsWith("kali ")) {
+            return "proot-distro login kali -- " + trimmed.substring(5);
+        } else if (trimmed.startsWith("msfconsole") || trimmed.startsWith("sqlmap") || trimmed.startsWith("hydra") || trimmed.startsWith("wifite") || trimmed.startsWith("aircrack-ng") || trimmed.startsWith("nmap")) {
+            return "nh -c \"" + trimmed + "\"";
+        }
+        return cmd;
     }
 }
