@@ -26,7 +26,7 @@
 <details>
   <summary>📸 Click to View IPv6 Exploit Vector</summary>
   <br>
-  <img src="https://github.com/user-attachments/assets/e77ecfe5-4640-4f15-b462-554cd58e4342" alt="Full Web Page Screenshot" width="50%">
+  <img src="https://github.com/user-attachments/assets/7097e0e0-1190-4774-b758-ca58b5e8760f" alt="Full Web Page Screenshot" width="50%">
 </details>
 
 ---
