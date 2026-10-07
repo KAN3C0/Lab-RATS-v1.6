@@ -25,8 +25,8 @@
 **Lab-RATS leverages the unique characteristics of publicly routable IPv6 addresses assigned by modern Wi-Fi and cellular *(5G/LTE)* carriers**. By **binding the control server directly to a device's Global Unicast Address** *(GUA)*, the tool **completely bypasses Carrier-Grade NAT** *(CGNAT)* and **inbound firewall restrictions**. This architecture **enables seamless, Zero-Configuration peer-to-peer** *(P2P)* **remote access from any modern web browser worldwide**—completely eliminating the need for **router manipulation, port forwarding**, or **third-party tunneling services** like **Ngrok** or **Pinggy**.
 <details>
   <summary>📸 Click to View IPv6 Exploit Vector</summary>
-  <br>
-  <img src="https://github.com/user-attachments/assets/7097e0e0-1190-4774-b758-ca58b5e8760f" alt="Full Web Page Screenshot" width="50%">
+  <br><p align="center">
+  <img src="https://github.com/user-attachments/assets/7097e0e0-1190-4774-b758-ca58b5e8760f" alt="Full Web Page Screenshot" width="70%">
 </details>
 
 ---
@@ -276,7 +276,7 @@ Once the **Target device** downloads the **APK**:
 
 <details>
   <summary>📸 Click to View Example Google Sheet Reporting</summary>
-  <br>
+  <br><p align="center">
   <img src="https://github.com/user-attachments/assets/ad174175-eed8-46b4-bd8d-8c72895cf88a" alt="Full Web Page Screenshot" width="80%">
 </details>
 
@@ -304,35 +304,42 @@ bc1q8d66m0qthnh6nw9hc5wl09m7pfydk46q5w8rxx
 
 ---
 
-## 📸 Screenshots & Video Clips
+## 📸 Video Clips
 
 ### APK-Builder Example *(Mac OS)*:
 
-https://github.com/user-attachments/assets/92767769-a141-42ad-a285-481e552d4706
+https://github.com/user-attachments/assets/010f8b79-49cb-48bc-ab7b-66081382e4bc
 
 ---
 
-### Built APK *(C2 Server)* Installed on Android Device:
+### Lab-RATS Initial Install Sequence:
 
-<img width="258" height="550" alt="Screenshot 2026-10-05 at 6 47 21 AM" src="https://github.com/user-attachments/assets/63bc22d1-70cb-47c2-b4ed-f99dc0464ab0" />
-
----
-
-### Lab-RATS Initial Install Sequence & Icon Stealth Preview:
-
-https://github.com/user-attachments/assets/d1b27cb9-24bf-4f7b-8241-f839a9d5c145
+https://github.com/user-attachments/assets/6f88173d-765e-4a67-b9c2-24404c81480f
 
 ---
 
-## Remote Web-Based C2 Dashboard - PC Interface
+## Remote C2 Dashboard (PC Interface)
 
-### Remote C2 Dashboard Clip #1:
+### C2 Dashboard - Remote Shell & Decoys:
 
-https://github.com/user-attachments/assets/21068401-f702-41e9-9e88-01a60d9beed5
+https://github.com/user-attachments/assets/ef14cf13-a614-4b20-aec2-003fa271312d
 
-### Remote C2 Dashboard Clip #2:
+---
 
-https://github.com/user-attachments/assets/ae0ede50-b58f-4a6d-962d-9cffd429c1af
+### C2 Dashboard - Ghost Ops & Locate:
+
+https://github.com/user-attachments/assets/46ace402-8663-49ee-ab26-c9e2f5ec0c37
+
+---
+
+## 📸 Screenshots
+
+### 00. Lab-RATS.apk Installed on Android Device:
+<details>
+  <summary>📸 Click to View App Screenshot</summary>
+  <br>
+  <img src="https://github.com/user-attachments/assets/63bc22d1-70cb-47c2-b4ed-f99dc0464ab0" alt="Full Web Page Screenshot" width="30%">
+</details>
 
 ---
 
