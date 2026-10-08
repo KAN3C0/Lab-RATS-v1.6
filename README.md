@@ -317,15 +317,21 @@ https://github.com/user-attachments/assets/ccac883c-3ed2-475b-87d3-c8b4a60693db
 
 ---
 
-### C2 Dashboard *(PC Interface)* - Remote Shell & Decoys:
+### Remote C2 Dashboard Clip 1 - Remote Shell & Decoys:
 
 https://github.com/user-attachments/assets/7e26fd18-3e77-4705-9095-068729a69416
 
 ---
 
-### C2 Dashboard - Ghost Ops & Locate:
+### Remote C2 Dashboard Clip 2 - Ghost Ops & Locate:
 
 https://github.com/user-attachments/assets/f2958adc-918b-44cd-975a-7549192bca99
+
+---
+
+### Remote C2 Dashboard Clip 3 - Covert Camera Hub:
+
+https://github.com/user-attachments/assets/0de5a65d-3bcc-4328-b508-de8a59b64578
 
 ---
 
