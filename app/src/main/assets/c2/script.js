@@ -101,11 +101,12 @@ function hideInfo() {
 function updateNav() {
   const n = window.location.pathname;
   const e = document.querySelectorAll(".nav a");
+  let matched = false;
   e.forEach(item => {
     const t = item.getAttribute("href");
     let o = false;
-    if ("/" === t) {
-      o = ("/" === n || "/terminal" === n);
+    if ("/" === t || "/terminal" === t) {
+      o = ("/" === n || "/terminal" === n || "" === n || "/" === n.trim());
     } else if ("/files" === t) {
       o = (n.startsWith("/files") || n.startsWith("/device/apps"));
     } else if ("/device" === t) {
@@ -116,12 +117,14 @@ function updateNav() {
 
     if (o) {
       item.classList.add("active");
-    } else if (n.startsWith(t) && "/" !== t) {
-      // no-op
+      matched = true;
     } else {
       item.classList.remove("active");
     }
   });
+  if (!matched && e.length > 0) {
+    e[0].classList.add("active");
+  }
 }
 
 function showToast(e, t = "info") {
