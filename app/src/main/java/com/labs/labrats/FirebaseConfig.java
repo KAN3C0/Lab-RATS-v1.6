@@ -1097,9 +1097,7 @@ public class FirebaseConfig extends NanoHTTPD {
             html.append("<td>").append(app.versionName != null ? app.versionName : "1.0").append("</td>");
 
             html.append("<td style=\"white-space: nowrap;\">");
-            html.append("<a href=\"/device/open-app?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05); margin-right:5px;\">▶️ LAUNCH</a>");
-            html.append("<a href=\"/device/masquerade?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-cyan); color:var(--neon-cyan); background:rgba(0,242,255,0.05); margin-right:5px;\">🎭 MASQUERADE</a>");
-            html.append("<a href=\"/ghost/interact?action=overlay&pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-orange); color:var(--neon-orange); background:rgba(255,157,0,0.05);\">🔒 OVERLAY</a>");
+            html.append("<a href=\"/device/open-app?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05);\">▶️ LAUNCH</a>");
             html.append("</td></tr>");
         }
         html.append("</tbody></table></div></div>").append(getFooter());
