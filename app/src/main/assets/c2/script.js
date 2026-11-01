@@ -377,8 +377,7 @@ async function handleLogin(e) {
     const res = await fetch(loginEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "password=" + encodeURIComponent(mask(t)) + "&json=true",
-      credentials: "include"
+      body: "password=" + encodeURIComponent(mask(t)) + "&json=true"
     });
     const data = await res.json();
     if (data.success) {
@@ -1582,21 +1581,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) loginForm.addEventListener("submit", handleLogin);
+
   const passwordForm = document.querySelector('form[action="/settings/password"]');
   if (passwordForm) passwordForm.addEventListener("submit", updatePassword);
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", () => {
     const palette = document.getElementById("color-picker-palette");
-    const btn = document.getElementById("toast-color-btn");
-    if (palette && btn && !palette.contains(e.target) && !btn.contains(e.target)) {
+    if (palette && "grid" === palette.style.display) {
       palette.style.display = "none";
     }
   });
 });
-
-function detachGhostControl() {
-    const isProxy = window.location.pathname.startsWith('/proxy') || window.location.hostname.includes('onrender.com');
-    const deviceId = (typeof activeDeviceId !== 'undefined' ? activeDeviceId : '') || new URLSearchParams(window.location.search).get('deviceId') || '';
-    const url = isProxy ? ('/proxy/ghost/popup' + (deviceId ? '?deviceId=' + encodeURIComponent(deviceId) : '')) : '/ghost/popup';
-    window.open(url, 'LabRats_GhostControl_Popup', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=450,height=880');
-}

