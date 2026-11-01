@@ -1583,10 +1583,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordForm = document.querySelector('form[action="/settings/password"]');
   if (passwordForm) passwordForm.addEventListener("submit", updatePassword);
 
-  document.addEventListener("click", () => {
+  document.addEventListener("click", (e) => {
     const palette = document.getElementById("color-picker-palette");
-    if (palette && "grid" === palette.style.display) {
+    const btn = document.getElementById("toast-color-btn");
+    if (palette && btn && !palette.contains(e.target) && !btn.contains(e.target)) {
       palette.style.display = "none";
     }
   });
 });
+
+function detachGhostControl() {
+    window.open('/ghost/popup', 'LabRats_GhostControl_Popup', 'width=450,height=880,resizable=yes,scrollbars=yes');
+}

