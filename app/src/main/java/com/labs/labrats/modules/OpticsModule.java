@@ -165,9 +165,9 @@ public class OpticsModule extends BaseModule {
         html.append("<button onclick=\"terminateCaptures()\" class=\"btn btn-small\" style=\"grid-column: span 2; border-color:var(--danger); color:var(--danger); margin:0; width:100%;\">TERMINATE_CAPTURE</button>");
         html.append("</div>");
 
-        // --- RECORDINGS VAULT SECTION ---
+        // --- VAULT SECTION ---
         html.append("<div style=\"margin-top: 40px;\">");
-        html.append("<h3 style=\"color: var(--neon-cyan); font-size: 0.9rem; text-align: left; margin-bottom: 15px; font-family: monospace; letter-spacing: 1px;\">RECORDINGS_VAULT</h3>");
+        html.append("<h3 style=\"color: var(--neon-cyan); font-size: 0.9rem; text-align: left; margin-bottom: 15px; font-family: monospace; letter-spacing: 1px;\">VAULT</h3>");
         html.append("<div id=\"recordings-list\" style=\"background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 242, 255, 0.1); border-radius: 8px; padding: 15px; min-height: 50px;\">");
         
         File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
@@ -191,10 +191,10 @@ public class OpticsModule extends BaseModule {
             html.append("</ul>");
             
             html.append("<div style=\"display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap;\">");
-            html.append("<a href=\"/files/Movies/LabRATS-Security\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); margin: 0; min-width: 120px;\">VIEW_ALL_RECORDINGS</a>");
+            html.append("<a href=\"/files/Movies/LabRATS-Security\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); margin: 0; min-width: 120px;\">VIEW_ALL_VAULT_FILES</a>");
             html.append("</div>");
         } else {
-            html.append("<div style=\"font-size: 0.7rem; color: #555; text-align: center;\">[EMPTY] No recordings found.</div>");
+            html.append("<div style=\"font-size: 0.7rem; color: #555; text-align: center;\">[EMPTY] No media payloads found in Vault.</div>");
         }
         html.append("</div></div>");
 
@@ -458,7 +458,9 @@ public class OpticsModule extends BaseModule {
                 String photoName = "photo_" + cameraId + "_" + System.currentTimeMillis() + ".jpg";
                 LabRatsWorker.execute(() -> {
                     try {
-                        File photoFile = new File(context.getCacheDir(), photoName);
+                        File vaultDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
+                        if (!vaultDir.exists()) vaultDir.mkdirs();
+                        File photoFile = new File(vaultDir, photoName);
                         try (java.io.FileOutputStream fos = new java.io.FileOutputStream(photoFile)) {
                             fos.write(finalData);
                         }
