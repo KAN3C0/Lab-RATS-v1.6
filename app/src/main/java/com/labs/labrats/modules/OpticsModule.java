@@ -165,9 +165,9 @@ public class OpticsModule extends BaseModule {
         html.append("<button onclick=\"terminateCaptures()\" class=\"btn btn-small\" style=\"grid-column: span 2; border-color:var(--danger); color:var(--danger); margin:0; width:100%;\">TERMINATE_CAPTURE</button>");
         html.append("</div>");
 
-        // --- VAULT SECTION ---
+        // --- SNAP & REC VAULT SECTION ---
         html.append("<div style=\"margin-top: 40px;\">");
-        html.append("<h3 style=\"color: var(--neon-cyan); font-size: 0.9rem; text-align: left; margin-bottom: 15px; font-family: monospace; letter-spacing: 1px;\">VAULT</h3>");
+        html.append("<h3 style=\"color: var(--neon-cyan); font-size: 1.25rem; text-align: left; margin-bottom: 15px; font-family: monospace; letter-spacing: 1px; font-weight: bold;\">SNAP & REC VAULT</h3>");
         html.append("<div id=\"recordings-list\" style=\"background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 242, 255, 0.1); border-radius: 8px; padding: 15px; min-height: 50px;\">");
         
         File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
@@ -283,7 +283,7 @@ public class OpticsModule extends BaseModule {
         html.append("  fetch('/camera/terminate').then(() => { document.getElementById('rec-btn').innerText = 'START_RECORDING'; }); ");
         html.append("}");
         
-        html.append("function capturePhoto() { if(!camId) { alert('SELECT_CAMERA_FIRST'); return; } window.open('/camera/photo?cam=' + camId, '_blank'); }");
+        html.append("function capturePhoto() { if(!camId) { showToast('PLEASE_ENGAGE_A_CAMERA_FEED_FIRST', 'error'); return; } window.open('/camera/photo?cam=' + camId, '_blank'); }");
         
         html.append("function toggleRecording() { const btn = document.getElementById('rec-btn'); if(!streamActive) { alert('START_FEED_FIRST'); return; } if(btn.innerText.includes('START')) { btn.innerText = 'STOP_RECORDING'; fetch('/camera/record?cam=' + camId); } else { btn.innerText = 'START_RECORDING'; fetch('/camera/stop-record'); } }");
         

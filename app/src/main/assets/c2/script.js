@@ -1166,7 +1166,7 @@ function capturePhoto() {
   if (_0x3c) {
     window.open("/camera/photo?cam=" + _0x3c, "_blank");
   } else {
-    showToast("SELECT_CAMERA_FIRST", "error");
+    showToast("PLEASE_ENGAGE_A_CAMERA_FEED_FIRST", "error");
   }
 }
 
