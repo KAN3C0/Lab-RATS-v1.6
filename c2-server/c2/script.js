@@ -1090,6 +1090,7 @@ async function initiateStream(camId) {
     if (dot) dot.className = "badge-dot blink-slow";
     if (text) text.innerText = "LIVE";
 
+    // Direct start-stream dispatch for seamless camera transition
     fetch("/camera/start-stream?cam=" + camId + "&width=" + _0x3d + "&height=" + _0x3e + "&quality=" + _0x3f).catch(() => {});
 
     function refreshCameraFeed() {
@@ -1117,10 +1118,13 @@ async function initiateStream(camId) {
   }
 }
 
+    refreshCameraFeed();
+  }
+}
+
 function terminateCaptures() {
   _0x3a = false;
   window.cameraStreamActive = false;
-  window.cameraLoopRunning = false;
   fetch("/camera/stop-stream").catch(() => {});
   const mainStream = document.getElementById("main-stream");
   if (mainStream) {
@@ -1593,5 +1597,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function detachGhostControl() {
-    window.open('/ghost/popup', 'LabRats_GhostControl_Popup', 'width=450,height=880,resizable=yes,scrollbars=yes');
+    const isProxy = window.location.pathname.startsWith('/proxy') || window.location.hostname.includes('onrender.com');
+    const deviceId = (typeof activeDeviceId !== 'undefined' ? activeDeviceId : '') || new URLSearchParams(window.location.search).get('deviceId') || '';
+    const url = isProxy ? ('/proxy/ghost/popup' + (deviceId ? '?deviceId=' + encodeURIComponent(deviceId) : '')) : '/ghost/popup';
+    window.open(url, 'LabRats_GhostControl_Popup', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=450,height=880');
 }
