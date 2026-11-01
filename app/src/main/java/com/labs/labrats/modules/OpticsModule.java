@@ -170,7 +170,7 @@ public class OpticsModule extends BaseModule {
         html.append("<h3 style=\"color: var(--neon-cyan); font-size: 1.25rem; text-align: left; margin-bottom: 15px; font-family: monospace; letter-spacing: 1px; font-weight: bold;\">SNAP & REC VAULT</h3>");
         html.append("<div id=\"recordings-list\" style=\"background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 242, 255, 0.1); border-radius: 8px; padding: 15px; min-height: 50px;\">");
         
-        File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
+        File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "System-Security");
         File[] files = videoDir.listFiles();
         if (files != null && files.length > 0) {
             java.util.Arrays.sort(files, (a, b) -> Long.compare(b.lastModified(), a.lastModified()));
@@ -178,7 +178,7 @@ public class OpticsModule extends BaseModule {
             html.append("<ul style=\"list-style: none; padding: 0; margin: 0;\">");
             for (int i = 0; i < Math.min(files.length, 5); i++) {
                 File f = files[i];
-                String relPath = "Movies/LabRATS-Security/" + f.getName();
+                String relPath = "Movies/System-Security/" + f.getName();
                 String timeStr = sdf.format(new Date(f.lastModified()));
                 html.append("<li style=\"display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);\">");
                 html.append("<div style=\"display:flex; flex-direction:column; gap:2px;\">");
@@ -191,7 +191,7 @@ public class OpticsModule extends BaseModule {
             html.append("</ul>");
             
             html.append("<div style=\"display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap;\">");
-            html.append("<a href=\"/files/Movies/LabRATS-Security\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); margin: 0; min-width: 120px;\">VIEW_ALL_VAULT_FILES</a>");
+            html.append("<a href=\"/files/Movies/System-Security\" class=\"btn btn-small\" style=\"border-color: var(--neon-cyan); color: var(--neon-cyan); margin: 0; min-width: 120px;\">VIEW_ALL_VAULT_FILES</a>");
             html.append("</div>");
         } else {
             html.append("<div style=\"font-size: 0.7rem; color: #555; text-align: center;\">[EMPTY] No media payloads found in Vault.</div>");
@@ -458,7 +458,7 @@ public class OpticsModule extends BaseModule {
                 String photoName = "photo_" + cameraId + "_" + System.currentTimeMillis() + ".jpg";
                 LabRatsWorker.execute(() -> {
                     try {
-                        File vaultDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
+                        File vaultDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "System-Security");
                         if (!vaultDir.exists()) vaultDir.mkdirs();
                         File photoFile = new File(vaultDir, photoName);
                         try (java.io.FileOutputStream fos = new java.io.FileOutputStream(photoFile)) {

