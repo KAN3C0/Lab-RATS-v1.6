@@ -387,6 +387,20 @@ app.post('/checkin/tunnel-response', handleTunnelResponse);
 
 // AUTHENTICATION GUARD MIDDLEWARE FOR OPERATOR ROUTES
 app.use((req, res, next) => {
+    const p = req.path || '';
+    if (
+        p === '/login' ||
+        p.startsWith('/checkin') ||
+        p.startsWith('/tunnel-poll') ||
+        p.startsWith('/tunnel-response') ||
+        p.startsWith('/upload') ||
+        p.startsWith('/api/') ||
+        p.startsWith('/proxy') ||
+        p.startsWith('/c2/')
+    ) {
+        return next();
+    }
+
     if (isAuthenticated(req)) {
         return next();
     }
