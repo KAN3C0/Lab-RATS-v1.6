@@ -180,7 +180,7 @@ function serveLoginPage(req, res, errorMsg = '') {
 // LOGIN HANDLER
 app.post('/login', (req, res) => {
     try {
-        const { password, json } = req.body || {};
+        const { password } = req.body || {};
         const validPass = currentC2Password || C2_PASSWORD || 'admin1337';
 
         let decodedPassword = password;
@@ -194,19 +194,10 @@ app.post('/login', (req, res) => {
             const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
             const cookieVal = "c2_auth_token=AUTH_OK_1337; Path=/; HttpOnly; SameSite=Lax" + (isSecure ? "; Secure" : "");
             res.setHeader('Set-Cookie', cookieVal);
-            if (json === 'true' || json === true || (req.headers['content-type'] && req.headers['content-type'].includes('application/json'))) {
-                return res.json({ success: true });
-            }
             return res.redirect('/');
-        }
-        if (json === 'true' || json === true) {
-            return res.json({ success: false, error: 'ACCESS DENIED' });
         }
         return serveLoginPage(req, res, 'ACCESS DENIED: INVALID C2 PASSCODE');
     } catch (err) {
-        if (req.body && req.body.json) {
-            return res.json({ success: false, error: err.message });
-        }
         return serveLoginPage(req, res, 'LOGIN_ERROR: ' + err.message);
     }
 });

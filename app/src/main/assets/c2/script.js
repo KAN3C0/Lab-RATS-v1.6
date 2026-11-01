@@ -1582,9 +1582,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const loginForm = document.getElementById("login-form");
-  if (loginForm) loginForm.addEventListener("submit", handleLogin);
-
   const passwordForm = document.querySelector('form[action="/settings/password"]');
   if (passwordForm) passwordForm.addEventListener("submit", updatePassword);
 
