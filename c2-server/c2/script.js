@@ -1159,11 +1159,17 @@ function terminateCaptures() {
 }
 
 function capturePhoto() {
-  if (_0x3c) {
-    window.open("/camera/photo?cam=" + _0x3c, "_blank");
-  } else {
+  if (!_0x3a || !_0x3c) {
     showToast("PLEASE_ENGAGE_A_CAMERA_FEED_FIRST", "error");
+    return;
   }
+  showToast("SNAPPING_PHOTO...");
+  fetch("/camera/photo?cam=" + _0x3c)
+    .then(res => {
+      showToast("PHOTO_SAVED_TO_VAULT");
+      setTimeout(() => location.reload(), 1200);
+    })
+    .catch(err => showToast("SNAP_FAILED", "error"));
 }
 
 function toggleRecording() {

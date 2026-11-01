@@ -283,7 +283,7 @@ public class OpticsModule extends BaseModule {
         html.append("  fetch('/camera/terminate').then(() => { document.getElementById('rec-btn').innerText = 'START_RECORDING'; }); ");
         html.append("}");
         
-        html.append("function capturePhoto() { if(!camId) { showToast('PLEASE_ENGAGE_A_CAMERA_FEED_FIRST', 'error'); return; } window.open('/camera/photo?cam=' + camId, '_blank'); }");
+        html.append("function capturePhoto() { if(!streamActive || !camId) { showToast('PLEASE_ENGAGE_A_CAMERA_FEED_FIRST', 'error'); return; } showToast('SNAPPING_PHOTO...'); fetch('/camera/photo?cam=' + camId).then(r => { showToast('PHOTO_SAVED_TO_VAULT'); setTimeout(() => location.reload(), 1200); }).catch(e => showToast('SNAP_FAILED', 'error')); }");
         
         html.append("function toggleRecording() { const btn = document.getElementById('rec-btn'); if(!streamActive) { alert('START_FEED_FIRST'); return; } if(btn.innerText.includes('START')) { btn.innerText = 'STOP_RECORDING'; fetch('/camera/record?cam=' + camId); } else { btn.innerText = 'START_RECORDING'; fetch('/camera/stop-record'); } }");
         
