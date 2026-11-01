@@ -377,7 +377,8 @@ async function handleLogin(e) {
     const res = await fetch(loginEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "password=" + encodeURIComponent(mask(t)) + "&json=true"
+      body: "password=" + encodeURIComponent(mask(t)) + "&json=true",
+      credentials: "include"
     });
     const data = await res.json();
     if (data.success) {

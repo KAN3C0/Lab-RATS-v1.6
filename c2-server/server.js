@@ -191,7 +191,9 @@ app.post('/login', (req, res) => {
         }
 
         if (decodedPassword === validPass || decodedPassword === 'admin1337' || password === validPass || password === 'admin1337') {
-            res.setHeader('Set-Cookie', 'c2_auth_token=AUTH_OK_1337; Path=/; HttpOnly; SameSite=Lax');
+            const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+            const cookieVal = "c2_auth_token=AUTH_OK_1337; Path=/; HttpOnly; SameSite=Lax" + (isSecure ? "; Secure" : "");
+            res.setHeader('Set-Cookie', cookieVal);
             if (json === 'true' || json === true || (req.headers['content-type'] && req.headers['content-type'].includes('application/json'))) {
                 return res.json({ success: true });
             }
